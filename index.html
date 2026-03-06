@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>April 2026 — HK + Japan Trip</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#1A1A2E;line-height:1.5}
+.ctr{max-width:920px;margin:0 auto;padding:24px 16px 60px}
+header{border-bottom:2px solid #1A1A2E;padding-bottom:18px;margin-bottom:24px}
+header h1{font-size:26px;font-weight:700;letter-spacing:-.5px}
+header p{font-size:14px;color:#6B7280;font-style:italic;font-family:'Newsreader',serif;margin-top:4px}
+.leg{display:flex;flex-wrap:wrap;gap:6px 14px;padding:10px 14px;background:#fff;border:1px solid #E5E7EB;border-radius:8px;margin-bottom:20px}
+.li{display:flex;align-items:center;gap:5px;font-size:11px;color:#374151}
+.ld{width:11px;height:11px;border-radius:3px}
+.vt{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.vb{font-size:12px;font-weight:600;padding:7px 18px;border-radius:6px;border:1.5px solid #D1D5DB;background:#fff;color:#374151;cursor:pointer;transition:all .15s}
+.vb.a{background:#1A1A2E;color:#fff;border-color:#1A1A2E}
+#fmc{display:none}
+#fm{height:520px;width:100%;border-radius:10px;border:1px solid #E5E7EB;margin-bottom:12px}
+.fml{display:flex;flex-wrap:wrap;gap:4px 14px;padding:10px 14px;background:#fff;border:1px solid #E5E7EB;border-radius:8px;font-size:10px;color:#374151}
+.fml b{font-weight:600}
+.cal{background:#fff;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden}
+.ch{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid #E5E7EB}
+.ch div{padding:8px 4px;text-align:center;font-size:10px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.5px}
+.cw{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid #F3F4F6}
+.cw:last-child{border-bottom:none}
+.cd{min-height:78px;padding:5px 6px;border-left:1px solid #F3F4F6;cursor:pointer;transition:background .15s;position:relative}
+.cd:first-child{border-left:none}
+.cd.e{background:#F9FAFB;cursor:default}
+.cd:not(.e):hover{background:#F0F0EE}
+.cd .dn{font-size:12px;font-weight:700}
+.cd.e .dn{color:#D1D5DB}
+.cd .lb{font-size:9px;font-weight:600;line-height:1.2;margin-top:2px}
+.cd .mv{position:absolute;bottom:3px;right:5px;font-size:7px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.3px}
+.cd .fd{width:6px;height:6px;border-radius:50%;border:1.5px dashed #9CA3AF;position:absolute;top:5px;right:5px}
+.dc{background:#fff;border:1px solid #E5E7EB;border-radius:10px;margin-bottom:16px;overflow:hidden}
+.dh{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;cursor:pointer;transition:background .1s}
+.dh:hover{background:#FAFAF8}
+.dd{min-width:60px}
+.dd .dw{font-size:10px;font-weight:700;color:#6B7280;text-transform:uppercase}
+.dd .nm{font-size:20px;font-weight:700;line-height:1.1}
+.di{flex:1}
+.di .tt{font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px}
+.di .sb{font-size:12px;color:#6B7280;margin-top:2px}
+.dt{display:flex;flex-direction:column;gap:4px;align-items:flex-end;min-width:70px}
+.tg{font-size:9px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap}
+.tm{background:#F3F4F6;color:#6B7280}
+.tf{background:#fff;color:#059669;border:1.5px dashed #059669}
+.db{border-top:1px solid #F3F4F6}
+.mw{height:280px;width:100%}
+.ds{padding:12px 16px}
+.st{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #F5F5F5}
+.st:last-child{border-bottom:none}
+.sm{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px}
+.sn{font-size:13px;font-weight:600}
+.so{font-size:11px;color:#6B7280;margin-top:1px}
+.stm{font-size:10px;font-weight:600;color:#9CA3AF;margin-top:2px}
+.ar{margin-left:auto;font-size:14px;color:#9CA3AF;transition:transform .25s;flex-shrink:0}
+.ar.op{transform:rotate(180deg)}
+.sts{margin-top:28px;padding:18px 20px;background:#fff;border:1px solid #E5E7EB;border-radius:10px}
+.sts h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px}
+.sn2{font-size:26px;font-weight:700;line-height:1}
+.sl{font-size:11px;font-weight:600;color:#374151;margin-top:2px}
+.ss{font-size:10px;color:#9CA3AF}
+.ft{text-align:center;font-size:10px;color:#9CA3AF;margin-top:18px}
+@media(max-width:600px){.cd{min-height:60px;padding:3px 4px}.cd .lb{font-size:8px}.dh{flex-wrap:wrap}.dt{flex-direction:row;width:100%;margin-top:4px}#fm{height:400px}}
+</style>
+</head>
+<body>
+<div class="ctr">
+<header>
+  <h1>April 2026 — HK + Japan</h1>
+  <p>25 days · 7 bases · Frankfurt → Hong Kong → Tokyo → Alps → Kyoto → Hiroshima → Kyushu → Home</p>
+</header>
+<div class="leg" id="lg"></div>
+<div class="vt">
+  <button class="vb a" onclick="sv('mo',this)">Monthly Overview</button>
+  <button class="vb" onclick="sv('fm',this)">Full Trip Map</button>
+  <button class="vb" onclick="sv('dy',this)">Day-by-Day + Maps</button>
+</div>
+<div id="mo"></div>
+<div id="fmc"><div id="fm"></div><div class="fml" id="fml"></div></div>
+<div id="dy" style="display:none"></div>
+<div class="sts">
+  <h3>Trip at a glance</h3>
+  <div class="sg">
+    <div><div class="sn2">13</div><div class="sl">Full activity days</div><div class="ss">dashed ○ on calendar</div></div>
+    <div><div class="sn2">9</div><div class="sl">Moving / travel days</div><div class="ss">some have half-day free</div></div>
+    <div><div class="sn2">2</div><div class="sl">Car rental legs</div><div class="ss">Alps 4d + Kyushu 4d</div></div>
+    <div><div class="sn2">3</div><div class="sl">Shinkansen rides</div><div class="ss">KNZ→KYO→HIR→FUK</div></div>
+    <div><div class="sn2">2</div><div class="sl">Splurge ryokan nights</div><div class="ss">Kawaguchiko + Kurokawa</div></div>
+    <div><div class="sn2">7</div><div class="sl">Location bases</div><div class="ss">HK→TYO→Alps→KYO→HIR→KYU</div></div>
+  </div>
+</div>
+<div class="ft">Click any day to expand its map · ○ = free time · "Moving" = travel day</div>
+</div>
+<script>
+const L0={HK:{n:"Hong Kong",c:"#E8453C",l:"#FDE8E6"},TRAVEL:{n:"Travel Day",c:"#1A1A2E",l:"#E8E8EE"},TOKYO:{n:"Tokyo",c:"#2563EB",l:"#DBEAFE"},FUJI:{n:"Kawaguchiko",c:"#7C3AED",l:"#EDE9FE"},ALPS:{n:"Alps / Hokuriku",c:"#059669",l:"#D1FAE5"},KYOTO:{n:"Kyoto hub",c:"#DB2777",l:"#FCE7F3"},HIRO:{n:"Hiroshima",c:"#EA580C",l:"#FFF7ED"},KYUSHU:{n:"Kyushu",c:"#0891B2",l:"#CFFAFE"}};
+const D=[
+{d:2,w:"Thu",loc:"TRAVEL",lb:"FRA → HKG",sb:"CX288 13:40→07:20+1",ic:"✈️",tr:1,s:[]},
+{d:3,w:"Fri",loc:"HK",lb:"Arrive HK",sb:"Settle in, dinner Central/SoHo",ic:"🛬",fr:1,s:[{n:"Butterfly on Wellington",a:22.2836,g:114.154,o:"Home base 4 nights. Central — SoHo + MTR walkable.",t:"9 AM"}]},
+{d:4,w:"Sat",loc:"HK",lb:"The Peak + Central",sb:"Victoria Peak skyline, wander Central, dinner",ic:"🏔️",fr:1,s:[{n:"Victoria Peak",a:22.2759,g:114.1455,o:"Go early. Peak Tram up. Stunning harbor views.",t:"9 AM"},{n:"Central / SoHo",a:22.2818,g:114.1588,o:"Explore SoHo, Lan Kwai Fong for dinner.",t:"4 PM"}]},
+{d:5,w:"Sun",loc:"HK",lb:"Kowloon Day",sb:"Harbor, markets, street food",ic:"🛍️",fr:1,s:[{n:"TST Promenade",a:22.2932,g:114.1722,o:"Iconic harbour view of HK Island.",t:"10 AM"},{n:"Temple St Night Market",a:22.3058,g:114.1693,o:"Evening market, food, fortune tellers.",t:"6 PM"}]},
+{d:6,w:"Mon",loc:"HK",lb:"Lantau / Dragon's Back",sb:"Big Buddha + Tai O village OR Dragon's Back hike",ic:"🥾",fr:1,s:[{n:"Tian Tan Buddha",a:22.254,g:113.905,o:"Ngong Ping 360 cable car. Spectacular.",t:"9:30 AM"},{n:"Tai O Village",a:22.2536,g:113.8598,o:"Stilt houses, boat rides. Old HK feel.",t:"1 PM"}]},
+{d:7,w:"Tue",loc:"TRAVEL",lb:"HKG → Tokyo",sb:"CX504 09:05→14:30. Ikebukuro, easy evening.",ic:"✈️",tr:1,s:[{n:"Ikebukuro (Hotel)",a:35.7295,g:139.7109,o:"Home base 5 nights. Yamanote Line. East exit izakayas.",t:"5 PM"}]},
+{d:8,w:"Wed",loc:"TOKYO",lb:"Tokyo Essentials",sb:"Meiji Shrine → Harajuku → Shibuya → Golden Gai",ic:"⛩️",fr:1,s:[{n:"Meiji Jingu Shrine",a:35.6764,g:139.6993,o:"Forest walk. Perfect first morning.",t:"9 AM"},{n:"Harajuku",a:35.6702,g:139.7026,o:"Youth fashion. Wild + colorful.",t:"11 AM"},{n:"Shibuya Crossing",a:35.6595,g:139.7006,o:"World's busiest crossing.",t:"12:30 PM"},{n:"Golden Gai, Shinjuku",a:35.6938,g:139.7034,o:"Tiny eccentric bars. Unforgettable.",t:"7 PM"}]},
+{d:9,w:"Thu",loc:"TOKYO",lb:"Shopping Day 1",sb:"Omotesando / Daikanyama",ic:"🛍️",fr:1,s:[{n:"Omotesando",a:35.6654,g:139.7121,o:"Flagship stores. Japan's Champs-Élysées.",t:"10 AM"},{n:"Daikanyama T-Site",a:35.6498,g:139.6997,o:"Beautiful bookstore. Design neighborhood.",t:"2 PM"}]},
+{d:10,w:"Fri",loc:"TOKYO",lb:"Culture + Food",sb:"TeamLab, Yanaka old-town, cherry blossoms",ic:"🌸",fr:1,s:[{n:"TeamLab Planets",a:35.6432,g:139.7847,o:"Immersive digital art. Book ahead.",t:"10 AM"},{n:"Yanaka / Nezu",a:35.7221,g:139.7667,o:"Old-town feel. Temples, cats, lanes.",t:"2 PM"}]},
+{d:11,w:"Sat",loc:"TOKYO",lb:"Shopping Day 2",sb:"Tsukiji → Ginza → Isetan depachika",ic:"🛍️",fr:1,s:[{n:"Tsukiji Outer Market",a:35.6648,g:139.7703,o:"Fresh sushi + street food. 8–9 AM.",t:"8:30 AM"},{n:"Ginza",a:35.6717,g:139.7649,o:"Luxury shopping + food halls.",t:"12 PM"},{n:"Isetan Depachika",a:35.6919,g:139.7044,o:"Best basement food hall in Tokyo.",t:"4 PM"}]},
+{d:12,w:"Sun",loc:"FUJI",lb:"→ Kawaguchiko",sb:"Bus ~2h. Ryokan + Fuji-view onsen",ic:"🗻",tr:1,fr:1,s:[{n:"Lake Kawaguchiko",a:35.5171,g:138.7518,o:"SPLURGE! Ryokan + private onsen + Fuji view.",t:"2 PM"}]},
+{d:13,w:"Mon",loc:"ALPS",lb:"→ Matsumoto → Takayama",sb:"Pick up car. Castle. Drive ~3.5h.",ic:"🚗",tr:1,s:[{n:"Matsumoto Castle",a:36.2387,g:137.9689,o:"Original 'Crow Castle'. ~1hr visit.",t:"11 AM"},{n:"Takayama Old Town",a:36.143,g:137.2595,o:"Overnight. Edo streets. Hida beef.",t:"4 PM"}]},
+{d:14,w:"Tue",loc:"ALPS",lb:"Takayama → Shirakawa → Kanazawa",sb:"Market, UNESCO village, drive to Kanazawa",ic:"🏘️",tr:1,fr:1,s:[{n:"Takayama Morning Market",a:36.1413,g:137.2571,o:"Local produce, crafts. Authentic.",t:"8 AM"},{n:"Shirakawa-go",a:36.2576,g:136.9065,o:"UNESCO thatched-roof farmhouses.",t:"12 PM"},{n:"Omicho Market",a:36.5717,g:136.6559,o:"Seafood bowl for dinner.",t:"5:30 PM"}]},
+{d:15,w:"Wed",loc:"ALPS",lb:"Kanazawa Full Day",sb:"Kenroku-en, Higashi Chaya, 21st Century Museum",ic:"🏯",fr:1,s:[{n:"Kenroku-en Garden",a:36.5621,g:136.6627,o:"One of Japan's 3 Great Gardens.",t:"9 AM"},{n:"Higashi Chaya",a:36.5727,g:136.666,o:"Geisha district. Gold leaf ice cream.",t:"12 PM"},{n:"21st Century Museum",a:36.5608,g:136.6575,o:"Swimming pool installation.",t:"2:30 PM"}]},
+{d:16,w:"Thu",loc:"TRAVEL",lb:"Kanazawa → Kyoto",sb:"Return car. Thunderbird ~2h15. Gion evening.",ic:"🚄",tr:1,s:[{n:"Gion, Kyoto",a:35.0037,g:135.7758,o:"Evening: Gion + Pontocho alley stroll.",t:"3 PM"}]},
+{d:17,w:"Fri",loc:"KYOTO",lb:"Kyoto Day 1",sb:"Fushimi Inari (early!), Kiyomizu-dera, Arashiyama",ic:"⛩️",fr:1,s:[{n:"Fushimi Inari Taisha",a:34.9677,g:135.7792,o:"7–8 AM! Thousands of torii gates.",t:"7:30 AM"},{n:"Kiyomizu-dera",a:34.9949,g:135.785,o:"Hilltop temple + cobblestone lanes.",t:"11 AM"},{n:"Arashiyama Bamboo",a:35.0168,g:135.6713,o:"Otherworldly. Quick but unforgettable.",t:"3 PM"}]},
+{d:18,w:"Sat",loc:"KYOTO",lb:"Kyoto Day 2",sb:"Kinkaku-ji, Philosopher's Path, Nanzen-ji",ic:"🦌",fr:1,s:[{n:"Kinkaku-ji",a:35.0394,g:135.7292,o:"Golden Pavilion reflected on pond.",t:"9 AM"},{n:"Philosopher's Path",a:35.0237,g:135.7946,o:"Cherry tree-lined canal walk.",t:"12 PM"},{n:"Nanzen-ji",a:35.0111,g:135.7926,o:"Brick aqueduct. Great photos.",t:"2 PM"}]},
+{d:19,w:"Sun",loc:"KYOTO",lb:"Osaka Day Trip",sb:"Dotonbori, Shinsekai, Umeda Sky Building",ic:"🐙",fr:1,s:[{n:"Dotonbori",a:34.6686,g:135.5031,o:"Famous food street. Sensory overload.",t:"11 AM"},{n:"Shinsekai",a:34.6523,g:135.5062,o:"Retro area. Kushikatsu is the must-eat.",t:"2 PM"},{n:"Umeda Sky Building",a:34.7052,g:135.4906,o:"Observatory. Stunning sunset.",t:"5 PM"}]},
+{d:20,w:"Mon",loc:"TRAVEL",lb:"Kyoto → Hiroshima",sb:"Shinkansen ~1h40. Peace Museum afternoon.",ic:"🚄",tr:1,fr:1,s:[{n:"Peace Memorial Museum",a:34.3915,g:132.4532,o:"Deeply moving. Allow 2–3 hours.",t:"2 PM"}]},
+{d:21,w:"Tue",loc:"HIRO",lb:"Miyajima Island",sb:"Ferry + shrine + floating torii",ic:"⛩️",fr:1,s:[{n:"Itsukushima Shrine",a:34.296,g:132.3198,o:"'Floats' at high tide. Momiji manju.",t:"10 AM"}]},
+{d:22,w:"Wed",loc:"TRAVEL",lb:"Hiroshima → Fukuoka",sb:"Shinkansen ~1h. Yatai stalls evening.",ic:"🚄",tr:1,fr:1,s:[{n:"Naka River Yatai",a:33.5918,g:130.4016,o:"Famous street food stalls. Ramen!",t:"7 PM"}]},
+{d:23,w:"Thu",loc:"KYUSHU",lb:"→ Kurokawa Onsen",sb:"Pick up car. Drive ~2.5h. Rotemburo hopping.",ic:"♨️",tr:1,fr:1,s:[{n:"Kurokawa Onsen",a:33.078,g:131.1416,o:"SPLURGE #2! Cave baths, forest rotemburo.",t:"3 PM"}]},
+{d:24,w:"Fri",loc:"KYUSHU",lb:"Aso + Takachiho",sb:"Volcanic caldera + gorge boat ride",ic:"🌋",fr:1,s:[{n:"Daikanbo (Aso)",a:32.9982,g:131.071,o:"Panoramic caldera view.",t:"9:30 AM"},{n:"Takachiho Gorge",a:32.7013,g:131.3007,o:"Rowboat through gorge + waterfall.",t:"2 PM"}]},
+{d:25,w:"Sat",loc:"KYUSHU",lb:"Beppu / Yufuin",sb:"Hell tour, sand bath, onsen town",ic:"♨️",fr:1,s:[{n:"Beppu Hells",a:33.3159,g:131.4697,o:"Surreal colored pools. 2–3 hours.",t:"10 AM"}]},
+{d:26,w:"Sun",loc:"KYUSHU",lb:"→ Fukuoka",sb:"Return car. Shopping + farewell dinner.",ic:"🍜",tr:1,fr:1,s:[{n:"Tenjin / Canal City",a:33.5897,g:130.3989,o:"Last night. Final ramen.",t:"2 PM"}]},
+{d:27,w:"Mon",loc:"TRAVEL",lb:"Fly Home",sb:"FUK 14:00→HKG 16:45→FRA 07:15+1",ic:"✈️",tr:1,s:[{n:"Fukuoka Airport",a:33.5859,g:130.4511,o:"Subway 5 min from Hakata.",t:"12 PM"}]}
+];
+const BASES=[
+{n:"Hong Kong",a:22.283,g:114.154,loc:"HK",dt:"Apr 3–7",ni:4},
+{n:"Tokyo",a:35.7295,g:139.7109,loc:"TOKYO",dt:"Apr 7–12",ni:5},
+{n:"Kawaguchiko",a:35.5171,g:138.7518,loc:"FUJI",dt:"Apr 12",ni:1},
+{n:"Takayama",a:36.143,g:137.26,loc:"ALPS",dt:"Apr 13–14",ni:1},
+{n:"Kanazawa",a:36.562,g:136.663,loc:"ALPS",dt:"Apr 14–16",ni:2},
+{n:"Kyoto",a:35.004,g:135.776,loc:"KYOTO",dt:"Apr 16–20",ni:4},
+{n:"Osaka",a:34.669,g:135.503,loc:"KYOTO",dt:"Apr 19 (day)",ni:0},
+{n:"Hiroshima",a:34.392,g:132.453,loc:"HIRO",dt:"Apr 20–22",ni:2},
+{n:"Miyajima",a:34.296,g:132.32,loc:"HIRO",dt:"Apr 21 (day)",ni:0},
+{n:"Fukuoka",a:33.59,g:130.399,loc:"KYUSHU",dt:"Apr 22, 26–27",ni:2},
+{n:"Kurokawa",a:33.078,g:131.142,loc:"KYUSHU",dt:"Apr 23",ni:1},
+{n:"Aso",a:32.998,g:131.071,loc:"KYUSHU",dt:"Apr 24 (day)",ni:0},
+{n:"Takachiho",a:32.701,g:131.301,loc:"KYUSHU",dt:"Apr 24 (day)",ni:0},
+{n:"Beppu",a:33.316,g:131.47,loc:"KYUSHU",dt:"Apr 25",ni:1}
+];
+const RTS=[
+{f:[22.283,114.154],t:[35.73,139.71],loc:"TRAVEL"},
+{p:[[35.73,139.71],[35.517,138.752],[36.239,137.969],[36.143,137.26],[36.258,136.907],[36.562,136.663]],loc:"ALPS"},
+{f:[36.562,136.663],t:[35.004,135.776],loc:"TRAVEL"},
+{f:[35.004,135.776],t:[34.392,132.453],loc:"TRAVEL"},
+{f:[34.392,132.453],t:[33.59,130.399],loc:"TRAVEL"},
+{p:[[33.59,130.399],[33.078,131.142],[32.998,131.071],[32.701,131.301],[33.316,131.47],[33.59,130.399]],loc:"KYUSHU"}
+];
+
+// Legend
+const lg=document.getElementById("lg");
+Object.entries(L0).forEach(([k,v])=>{lg.innerHTML+=`<div class="li"><div class="ld" style="background:${v.c}"></div>${v.n}</div>`;});
+lg.innerHTML+=`<div class="li"><div class="ld" style="background:#fff;border:1.5px dashed #9CA3AF"></div>= free to plan</div>`;
+
+function sv(v,b){document.querySelectorAll('.vb').forEach(t=>t.classList.remove('a'));if(b)b.classList.add('a');
+document.getElementById('mo').style.display=v==='mo'?'block':'none';
+document.getElementById('fmc').style.display=v==='fm'?'block':'none';
+document.getElementById('dy').style.display=v==='dy'?'block':'none';
+if(v==='fm')setTimeout(iFM,50);}
+
+// Calendar
+(function(){
+const c=document.getElementById('mo');let h='<div class="cal"><div class="ch">';
+["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].forEach(d=>h+=`<div>${d}</div>`);
+h+='</div>';const cs=[];for(let i=0;i<2;i++)cs.push(null);
+for(let d=1;d<=30;d++){const dd=D.find(x=>x.d===d);cs.push(dd||{d,loc:null,lb:"",sb:""});}
+while(cs.length%7)cs.push(null);
+for(let w=0;w<cs.length;w+=7){h+='<div class="cw">';for(let i=0;i<7;i++){const cl=cs[w+i];
+if(!cl){h+=`<div class="cd e"><span class="dn"></span></div>`;continue;}
+const lo=cl.loc?L0[cl.loc]:null;const co=lo?lo.c:"#D1D5DB";
+h+=`<div class="cd" onclick="gd(${cl.d})" style="${lo?'border-bottom:3px solid '+co:''}">`;
+h+=`<span class="dn">${cl.d}</span>`;
+if(cl.fr)h+=`<div class="fd"></div>`;
+if(cl.lb)h+=`<div class="lb" style="color:${co}">${cl.ic||''} ${cl.lb}</div>`;
+if(cl.tr)h+=`<div class="mv">moving</div>`;h+=`</div>`;}h+=`</div>`;}
+h+='</div>';c.innerHTML=h;})();
+
+function gd(d){if(!D.find(x=>x.d===d))return;sv('dy',document.querySelectorAll('.vb')[2]);
+setTimeout(()=>{const e=document.getElementById('d'+d);if(e){e.scrollIntoView({behavior:'smooth',block:'center'});od(d);}},150);}
+
+// Full map
+let fmi=null;
+function iFM(){if(fmi){fmi.invalidateSize();return;}
+const m=L.map('fm',{scrollWheelZoom:true});
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',maxZoom:18}).addTo(m);
+const ap=[];
+RTS.forEach(r=>{const co=L0[r.loc]?L0[r.loc].c:'#999';
+if(r.p){L.polyline(r.p,{color:co,weight:3.5,opacity:.7}).addTo(m);r.p.forEach(p=>ap.push(p));}
+else{L.polyline([r.f,r.t],{color:co,weight:2.5,opacity:.45,dashArray:'10,8'}).addTo(m);ap.push(r.f,r.t);}});
+BASES.forEach(b=>{const lo=L0[b.loc];const sz=b.ni>0?Math.max(34,22+b.ni*4):22;
+const ic=L.divIcon({className:'',html:`<div style="background:${lo.c};color:#fff;min-width:${sz}px;height:${sz}px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:${b.ni>0?13:10}px;font-family:DM Sans;box-shadow:0 2px 8px rgba(0,0,0,.35);border:2.5px solid #fff;${b.ni===0?'opacity:.75':''}">${b.ni>0?b.ni+'n':''}</div>`,iconSize:[sz,sz],iconAnchor:[sz/2,sz/2]});
+L.marker([b.a,b.g],{icon:ic}).addTo(m).bindPopup(`<div style="font-family:DM Sans"><b style="font-size:14px">${b.n}</b><br><span style="font-size:12px;color:${lo.c};font-weight:600">${b.dt}</span>${b.ni?`<br><span style="font-size:11px;color:#6B7280">${b.ni} night${b.ni>1?'s':''}</span>`:''}</div>`);
+const li=L.divIcon({className:'',html:`<div style="font-family:DM Sans;font-size:10px;font-weight:700;color:${lo.c};background:rgba(255,255,255,.92);padding:1px 5px;border-radius:3px;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.12);pointer-events:none;transform:translateY(${sz/2+4}px)">${b.dt}</div>`,iconSize:[0,0],iconAnchor:[0,-2]});
+L.marker([b.a,b.g],{icon:li,interactive:false}).addTo(m);ap.push([b.a,b.g]);});
+if(ap.length)m.fitBounds(ap,{padding:[35,35]});fmi=m;
+document.getElementById('fml').innerHTML=`<b>Routes:</b> <span>Dashed = flights/trains</span> · <span style="color:${L0.ALPS.c}">━ Alps car</span> · <span style="color:${L0.KYUSHU.c}">━ Kyushu car loop</span> · <b>Circles:</b> size = nights · click for details`;}
+
+// Day cards
+(function(){const c=document.getElementById('dy');let h='';
+D.forEach(d=>{const lo=L0[d.loc];
+h+=`<div class="dc" id="d${d.d}"><div class="dh" onclick="td(${d.d})" style="border-left:4px solid ${lo.c}">`;
+h+=`<div class="dd"><div class="dw">${d.w}</div><div class="nm">Apr ${d.d}</div></div>`;
+h+=`<div class="di"><div class="tt"><span>${d.ic}</span> ${d.lb}</div><div class="sb">${d.sb}</div></div>`;
+h+=`<div class="dt"><span class="tg" style="background:${lo.l};color:${lo.c}">${lo.n}</span>`;
+if(d.tr)h+=`<span class="tg tm">Moving</span>`;if(d.fr)h+=`<span class="tg tf">Plan ✓</span>`;
+h+=`</div><span class="ar" id="a${d.d}">▼</span></div>`;
+h+=`<div class="db" id="b${d.d}" style="display:none">`;
+if(d.s.length)h+=`<div class="mw" id="m${d.d}"></div>`;
+if(d.s.length){h+=`<div class="ds">`;d.s.forEach((s,i)=>{
+h+=`<div class="st"><div class="sm" style="background:${lo.c}">${i+1}</div><div><div class="sn">${s.n}</div><div class="so">${s.o}</div>`;
+if(s.t)h+=`<div class="stm">⏰ ${s.t}</div>`;h+=`</div></div>`;});h+=`</div>`;}
+h+=`</div></div>`;});c.innerHTML=h;})();
+
+const dm={},os=new Set();
+function td(d){if(os.has(d)){document.getElementById('b'+d).style.display='none';const a=document.getElementById('a'+d);if(a)a.classList.remove('op');os.delete(d);}else od(d);}
+function od(d){if(os.has(d))return;const b=document.getElementById('b'+d);const a=document.getElementById('a'+d);
+if(!b)return;b.style.display='block';if(a)a.classList.add('op');os.add(d);setTimeout(()=>cm(d),80);}
+function cm(d){if(dm[d]){dm[d].invalidateSize();return;}
+const dy=D.find(x=>x.d===d);if(!dy||!dy.s.length)return;const el=document.getElementById('m'+d);if(!el)return;
+const lo=L0[dy.loc];const m=L.map(el,{scrollWheelZoom:false});
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',maxZoom:18}).addTo(m);
+const bn=[];dy.s.forEach((s,i)=>{const ic=L.divIcon({className:'',
+html:`<div style="background:${lo.c};color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;font-family:DM Sans;box-shadow:0 2px 6px rgba(0,0,0,.3);border:2px solid #fff">${i+1}</div>`,
+iconSize:[28,28],iconAnchor:[14,14]});
+L.marker([s.a,s.g],{icon:ic}).addTo(m).bindPopup(`<b>${s.n}</b><br><span style="font-size:12px;color:#555">${s.o}</span>`);bn.push([s.a,s.g]);});
+if(dy.s.length>1)L.polyline(dy.s.map(s=>[s.a,s.g]),{color:lo.c,weight:3,opacity:.5,dashArray:'8,8'}).addTo(m);
+if(bn.length===1)m.setView(bn[0],13);else m.fitBounds(bn,{padding:[40,40]});dm[d]=m;}
+</script>
+</body>
+</html>
