@@ -23,9 +23,10 @@ header{border-bottom:2px solid #1A1A2E;padding-bottom:18px;margin-bottom:24px}he
 .travel-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;color:#6B7280;background:#F3F4F6;padding:2px 8px;border-radius:4px;margin:4px 0 4px 40px}
 .ar{margin-left:auto;font-size:14px;color:#9CA3AF;transition:transform .25s;flex-shrink:0}.ar.op{transform:rotate(180deg)}
 .sts{margin-top:28px;padding:18px 20px;background:#fff;border:1px solid #E5E7EB;border-radius:10px}.sts h3{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px}.sn2{font-size:26px;font-weight:700;line-height:1}.sl{font-size:11px;font-weight:600;color:#374151;margin-top:2px}.ss{font-size:10px;color:#9CA3AF}
+.gv{padding:14px 16px 4px;border-top:1px solid #F3F4F6}.ghd{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}.gtl{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}.gsub{font-size:11px;color:#6B7280;margin-top:3px;max-width:520px}.gsrc{font-size:10px;color:#9CA3AF;white-space:nowrap}.gg{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.gcard{background:#fff;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;min-height:100%}.gmedia{aspect-ratio:16/10;background:#E5E7EB;overflow:hidden;display:flex;align-items:center;justify-content:center}.gmedia img{width:100%;height:100%;object-fit:cover;display:block}.gph{background:linear-gradient(135deg,#F3F4F6,#E5E7EB);font-size:26px;color:#9CA3AF}.gbody{padding:12px}.gmeta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.45px;color:#9CA3AF}.gpri{font-size:9px;font-weight:700;padding:2px 6px;border-radius:999px;text-transform:none;letter-spacing:0}.gname{font-size:14px;font-weight:700;margin-top:6px}.gcopy{font-size:11px;color:#4B5563;margin-top:5px}.gfoot{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:10px;color:#9CA3AF;margin-top:10px}.gfoot a{color:#6B7280;text-decoration:none}.gfoot a:hover{text-decoration:underline}
 .ft{text-align:center;font-size:10px;color:#9CA3AF;margin-top:18px}
 .leaflet-popup-content{font-family:'DM Sans',sans-serif!important;line-height:1.4!important}.leaflet-popup-content b{font-size:13px}.leaflet-popup-content .pop-dates{font-size:11px;font-weight:600;margin:2px 0}.leaflet-popup-content .pop-notes{font-size:11px;color:#555;margin-top:3px}.leaflet-popup-content .pop-pri{font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;display:inline-block;margin-top:4px}
-@media(max-width:600px){.cd{min-height:60px;padding:3px 4px}.cd .lb{font-size:8px}.dh{flex-wrap:wrap}.dt{flex-direction:row;width:100%;margin-top:4px}#fm{height:420px}.route-seq{font-size:10px}}
+@media(max-width:600px){.cd{min-height:60px;padding:3px 4px}.cd .lb{font-size:8px}.dh{flex-wrap:wrap}.dt{flex-direction:row;width:100%;margin-top:4px}#fm{height:420px}.route-seq{font-size:10px}.ghd{flex-direction:column}.gsrc{white-space:normal}.gg{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -179,6 +180,65 @@ const SEQ=[
 // Priority colors
 const PC={r:"#DC2626",y:"#D97706",o:"#9CA3AF",base:"#374151"};
 const PL={r:"must-do",y:"strong option",o:"optional",base:"base"};
+const WPO={
+  "Butterfly on Wellington":["Central, Hong Kong","SoHo, Hong Kong"],
+  "Meiji Jingu Shrine":["Meiji Shrine"],
+  "Central / SoHo":["SoHo, Hong Kong","Central, Hong Kong"],
+  "TST Promenade":["Victoria Harbour","Tsim Sha Tsui"],
+  "Temple St Night Market":["Temple Street Night Market","Kowloon"],
+  "Tai O Village":["Tai O"],
+  "Ikebukuro (Hotel)":["Ikebukuro"],
+  "Golden Gai, Shinjuku":["Shinjuku Golden Gai"],
+  "Daikanyama T-Site":["Daikanyama","Shibuya"],
+  "Omotesando":["Omotesandō","Shibuya"],
+  "TeamLab Planets":["teamLab Planets TOKYO DMM.com","Toyosu","Tokyo"],
+  "Yanaka / Nezu":["Yanaka Ginza","Yanaka","Nezu","Tokyo"],
+  "Tsukiji Outer Market":["Tsukiji fish market"],
+  "Isetan Depachika":["Isetan","Shinjuku"],
+  "Lake Kawaguchiko":["Lake Kawaguchi"],
+  "Tian Tan Buddha":["Tian Tan Buddha","Lantau Island"],
+  "Takayama Old Town":["Takayama, Gifu"],
+  "Takayama Morning Market":["Takayama, Gifu"],
+  "Shirakawa-go":["Historic Villages of Shirakawa-go and Gokayama","Gokayama"],
+  "Omicho Market, Kanazawa":["Omicho Market","Kanazawa"],
+  "Kenroku-en Garden":["Kenroku-en","Kanazawa"],
+  "Higashi Chaya":["Higashi Chaya District","Kanazawa"],
+  "21st Century Museum":["21st Century Museum of Contemporary Art, Kanazawa","Kanazawa"],
+  "Gion, Kyoto":["Gion"],
+  "Gion / Pontocho":["Pontocho","Gion"],
+  "Arashiyama Bamboo":["Arashiyama"],
+  "Dotonbori, Osaka":["Dotonbori","Osaka"],
+  "Fushimi Inari Taisha":["Fushimi Inari-taisha","Kyoto"],
+  "Peace Memorial Museum":["Hiroshima Peace Memorial Museum"],
+  "Naka River Yatai":["Fukuoka"],
+  "Kusasenri / Aso viewpoints":["Mount Aso","Kusasenri"],
+  "Kurokawa Onsen":["Minamioguni, Kumamoto","Kumamoto Prefecture"],
+  "Takachiho Gorge (Option A)":["Takachiho Gorge","Takachiho, Miyazaki","Miyazaki Prefecture"],
+  "Beppu Hells (Option B)":["Hells of Beppu","Beppu"],
+  "Tenjin / Canal City":["Canal City Hakata","Hakata-ku, Fukuoka","Fukuoka"]
+};
+const WIKI_API='https://en.wikipedia.org/w/api.php';
+const wc=new Map(),dg=new Map();
+
+function eh(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function clip(v,l=160){const t=(v||'').trim();return t.length>l?`${t.slice(0,l-1).trim()}…`:t;}
+function galleryTitles(stop){const out=[],seen=new Set(),base=stop.n.replace(/\s*\([^)]*\)/g,'').trim();
+const add=t=>{const c=(t||'').trim();if(!c)return;const k=c.toLowerCase();if(!seen.has(k)){seen.add(k);out.push(c);}};
+(WPO[stop.n]||[]).forEach(add);add(base);if(base.includes(' / '))base.split(' / ').forEach(add);if(base.includes(','))add(base.split(',')[0]);return out;}
+function galleryBadge(stop){const pl=PL[stop.p]||'';if(!pl||stop.p==='base')return '';const pc=PC[stop.p]||PC.base;return `<span class="gpri" style="background:${pc}15;color:${pc}">${stop.p==='r'?'🔴':'🟡'} ${pl}</span>`;}
+function galleryShell(day,stop,i){const lo=L0[day.loc];return `<article class="gcard" style="border-top:3px solid ${lo.c}"><div class="gmedia gph">${day.ic}</div><div class="gbody"><div class="gmeta"><span>Stop ${i+1}</span>${galleryBadge(stop)}</div><div class="gname">${eh(stop.n)}</div><div class="gcopy">${eh(clip(stop.o,150))}</div><div class="gfoot"><span>Loading photo…</span></div></div></article>`;}
+function renderGalleryCard(day,stop,i,data){const lo=L0[day.loc],label=data?.title&&data.title!==stop.n?`Photo via ${data.title}`:'Photo via Wikipedia',img=data?.image?`<img src="${eh(data.image)}" alt="${eh(stop.n)}" loading="lazy" referrerpolicy="no-referrer">`:`<div class="gph" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">${day.ic}</div>`;
+return `<article class="gcard" style="border-top:3px solid ${lo.c}"><div class="gmedia">${img}</div><div class="gbody"><div class="gmeta"><span>Stop ${i+1}</span>${galleryBadge(stop)}</div><div class="gname">${eh(stop.n)}</div><div class="gcopy">${eh(clip(stop.o,160))}</div><div class="gfoot"><span>${eh(label)}</span>${data?.url?`<a href="${eh(data.url)}" target="_blank" rel="noreferrer noopener">Open article ↗</a>`:''}</div></div></article>`;}
+async function fetchWikiCard(title){if(wc.has(title))return wc.get(title);
+const p=(async()=>{const qs=new URLSearchParams({action:'query',format:'json',formatversion:'2',prop:'pageimages|extracts|info',piprop:'thumbnail',pithumbsize:'640',exintro:'1',explaintext:'1',exchars:'220',inprop:'url',titles:title,origin:'*'});
+const r=await fetch(`${WIKI_API}?${qs.toString()}`);if(!r.ok)throw new Error(`wiki ${r.status}`);const j=await r.json();const page=j?.query?.pages?.[0];
+if(!page||page.missing||page.invalid)return null;return {title:page.title||title,image:page.thumbnail?.source||'',url:page.fullurl||page.canonicalurl||'',extract:page.extract||''};})().catch(()=>null);
+wc.set(title,p);return p;}
+async function resolveGalleryCard(stop){let fallback=null;for(const title of galleryTitles(stop)){const data=await fetchWikiCard(title);if(!data)continue;if(data.image)return data;if(!fallback)fallback=data;}return fallback;}
+async function loadDayGallery(d){if(dg.has(d))return dg.get(d);
+const p=(async()=>{const day=D.find(x=>x.d===d),el=document.getElementById('g'+d);if(!day||!el||!day.s.length)return;
+const cards=await Promise.all(day.s.map(async(s,i)=>renderGalleryCard(day,s,i,await resolveGalleryCard(s))));el.innerHTML=cards.join('');})().catch(()=>{const day=D.find(x=>x.d===d),el=document.getElementById('g'+d);if(!day||!el)return;el.innerHTML=day.s.map((s,i)=>renderGalleryCard(day,s,i,null)).join('');});
+dg.set(d,p);return p;}
 
 // Legend
 const lg=document.getElementById("lg");
@@ -270,7 +330,8 @@ if(day.tr)h+=`<span class="tg tm">Moving</span>`;if(day.fr)h+=`<span class="tg t
 h+=`</div><span class="ar" id="a${day.d}">▼</span></div>`;
 h+=`<div class="db" id="b${day.d}" style="display:none">`;
 if(day.s.length)h+=`<div class="mw" id="m${day.d}"></div>`;
-if(day.s.length){h+=`<div class="ds">`;day.s.forEach((s,i)=>{
+if(day.s.length){h+=`<div class="gv"><div class="ghd"><div><div class="gtl">Visual guide</div><div class="gsub">Photo previews for each stop — exact place when possible, nearby area when that tells the story better.</div></div><div class="gsrc">Photos via Wikipedia</div></div><div class="gg" id="g${day.d}">${day.s.map((s,i)=>galleryShell(day,s,i)).join('')}</div></div>`;
+h+=`<div class="ds">`;day.s.forEach((s,i)=>{
 const pc=PC[s.p]||PC.base;const pl=PL[s.p]||'';
 h+=`<div class="st"><div class="sm" style="background:${lo.c}">${i+1}</div><div>`;
 h+=`<div class="sn">${s.n}`;
@@ -285,7 +346,7 @@ h+=`</div></div>`;});c.innerHTML=h;})();
 const dm={},os=new Set();
 function td(d){if(os.has(d)){document.getElementById('b'+d).style.display='none';const a=document.getElementById('a'+d);if(a)a.classList.remove('op');os.delete(d);}else od(d);}
 function od(d){if(os.has(d))return;const b=document.getElementById('b'+d);const a=document.getElementById('a'+d);
-if(!b)return;b.style.display='block';if(a)a.classList.add('op');os.add(d);setTimeout(()=>cm(d),100);}
+if(!b)return;b.style.display='block';if(a)a.classList.add('op');os.add(d);setTimeout(()=>{cm(d);loadDayGallery(d);},100);}
 function cm(d){if(dm[d]){dm[d].invalidateSize();return;}
 const dy=D.find(x=>x.d===d);if(!dy||!dy.s.length)return;const el=document.getElementById('m'+d);if(!el)return;
 const lo=L0[dy.loc];const m=L.map(el,{scrollWheelZoom:false});
